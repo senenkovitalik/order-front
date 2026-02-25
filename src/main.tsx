@@ -10,6 +10,7 @@ import ProtectedRoute from "./ProtectedRoute.tsx";
 import { AuthProvider } from "./AuthContext.tsx";
 import { HttpLink } from "@apollo/client";
 import VpnProfiles from "./VpnProfiles/VpnProfiles.tsx";
+import Units from "./Unit/Units.tsx";
 
 const client = new ApolloClient({
   link: new HttpLink({ uri: "http://localhost:4000/" }),
@@ -30,7 +31,9 @@ createRoot(document.getElementById("root")!).render(
 
             <Route element={<ProtectedRoute />}>
               <Route path="vpn_profiles" element={<VpnProfiles />} />
+              <Route path="units" element={<Units />} />
             </Route>
+            
           </Routes>
         </BrowserRouter>
       </AuthProvider>

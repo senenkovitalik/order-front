@@ -7,6 +7,8 @@ function Home() {
       <Link to="/login">Login</Link>
       <br />
       <Link to="/vpn_profiles">VPN Profiles</Link>
+      <br />
+      <Link to="/units">Units</Link>
     </>
   )
 }

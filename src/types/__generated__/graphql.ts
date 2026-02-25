@@ -296,6 +296,11 @@ export type LoginQueryVariables = Exact<{
 
 export type LoginQuery = { login: { __typename: 'AuthData', token: string } };
 
+export type UnitsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UnitsQuery = { units: Array<{ __typename: 'Unit', id: string, title: string, location: string | null }> };
+
 export type VpnProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
