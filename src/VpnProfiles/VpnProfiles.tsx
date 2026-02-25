@@ -36,11 +36,18 @@ export default function VpnProfiles() {
     VpnProfilesQuery,
     VpnProfilesQueryVariables
   >(VPN_PROFILES_QUERY);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    console.error("Error fetching VPN profiles:", error);
+  }
+
   return (
     <div>
       <h1>VPN Profiles</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
       <table className="simple-table">
         <thead>
           <tr>
