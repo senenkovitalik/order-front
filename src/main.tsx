@@ -5,7 +5,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client";
 import { ApolloProvider } from "@apollo/client/react";
 import App from "./Home.tsx";
 import AuthLayout from "./AuthLAyout.tsx";
-import Login from "./Login.tsx";
+import Login from "./Login/Login.tsx";
 import ProtectedRoute from "./ProtectedRoute.tsx";
 import { AuthProvider } from "./AuthContext.tsx";
 import { HttpLink } from "@apollo/client";
