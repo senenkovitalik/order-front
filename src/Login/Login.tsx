@@ -93,6 +93,8 @@ export default function Login() {
             />
 
             <button type="submit">Login</button>
+
+            {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
           </div>
 
           <div className="container" style={{ backgroundColor: "#f1f1f1" }}>

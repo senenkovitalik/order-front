@@ -6,7 +6,7 @@ function Home() {
       <h1>Order Frontend</h1>
       <Link to="/login">Login</Link>
       <br />
-      <Link to="/private">Private Route</Link>
+      <Link to="/vpn_profiles">VPN Profiles</Link>
     </>
   )
 }
