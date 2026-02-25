@@ -29,7 +29,7 @@ createRoot(document.getElementById("root")!).render(
             </Route>
 
             <Route element={<ProtectedRoute />}>
-              <Route path="private" element={<VpnProfiles />} />
+              <Route path="vpn_profiles" element={<VpnProfiles />} />
             </Route>
           </Routes>
         </BrowserRouter>
