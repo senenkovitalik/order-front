@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 export const Container = ({
   children,
@@ -39,12 +39,14 @@ export const CancelButton = ({
   );
 };
 
-// active link
-/* background-color: #04AA6D; */
-
 export const StyledLink = (to: string, text: string) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
   return (
-    <Link to={to} className="block text-white px-3.5 py-4 hover:bg-[#111]">
+    <Link
+      to={to}
+      className={`block text-white px-3.5 py-4 hover:bg-[#111] ${isActive ? "bg-[#04AA6D]" : ""}`}
+    >
       {text}
     </Link>
   );
