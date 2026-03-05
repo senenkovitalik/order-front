@@ -7,7 +7,7 @@ import type {
   LoginQuery,
   LoginQueryVariables,
 } from "../types/__generated__/graphql";
-import { Container, Button, CancelButton } from "../components/components";
+import { Container, Button } from "../components/components";
 
 const LOGIN_QUERY = gql`
   query Login($username: String!, $password: String!) {
@@ -97,9 +97,9 @@ export default function Login() {
         </Container>
 
         <Container style={{ backgroundColor: "#f1f1f1" }}>
-          <CancelButton type="button" onClick={() => navigate(-1)}>
+          <Button variant="danger" type="button" onClick={() => navigate(-1)}>
             Cancel
-          </CancelButton>
+          </Button>
         </Container>
       </form>
     </div>

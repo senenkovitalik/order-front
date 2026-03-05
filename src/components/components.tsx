@@ -11,28 +11,28 @@ export const Container = ({
   );
 };
 
+type ButtonProps = {
+  children: React.ReactNode;
+  variant?: "primary" | "danger" | "secondary";
+  onClick?: () => void;
+  className?: string;
+} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+
 export const Button = ({
   children,
+  variant = "primary",
+  className,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: ButtonProps) => {
+  const styles = {
+    primary: "bg-[#04AA6D] text-white hover:opacity-[0.8]",
+    danger: "bg-[#f44336] text-white hover:opacity-[0.8]",
+    secondary: "bg-gray-200 text-gray-800 hover:opacity-[0.8]",
+  };
   return (
     <button
       {...props}
-      className="bg-[#04AA6D] text-[white] px-5 py-3.5 mx-0 my-2 border-[none] cursor-pointer w-full hover:opacity-[0.8]"
-    >
-      {children}
-    </button>
-  );
-};
-
-export const CancelButton = ({
-  children,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  return (
-    <button
-      {...props}
-      className="text-[white] md:w-auto bg-[#f44336] px-5 py-3.5 mx-0 my-2 border-[none] cursor-pointer hover:opacity-[0.8] w-full"
+      className={`px-5 py-3.5 mx-0 my-2 border-[none] cursor-pointer  ${styles[variant]} ${className || ""}`}
     >
       {children}
     </button>
@@ -58,7 +58,10 @@ export const TableTh = ({
   ...props
 }: React.HTMLAttributes<HTMLTableCellElement>) => {
   return (
-    <th {...props} className="p-3 text-left border-b-[1px_solid_#ddd] bg-[#4CAF50] text-white">
+    <th
+      {...props}
+      className="p-3 text-left border-b-[1px_solid_#ddd] bg-[#4CAF50] text-white"
+    >
       {children}
     </th>
   );
@@ -94,5 +97,21 @@ export const Table = ({
     <table {...props} className="w-full border-collapse font-[sans-serif]">
       {children}
     </table>
+  );
+};
+
+export const Modal = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div
+      className="fixed z-1 left-0 top-0 w-full h-full overflow-auto bg-black/40
+"
+    >
+      <div
+        className="bg-[#fefefe] mt-[15%] mx-auto p-5 border border-[#888] w-[80%] lg:w-[40%]
+"
+      >
+        {children}
+      </div>
+    </div>
   );
 };

@@ -301,6 +301,27 @@ export type UnitsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type UnitsQuery = { units: Array<{ __typename: 'Unit', id: string, title: string, location: string | null }> };
 
+export type CreateUnitMutationVariables = Exact<{
+  unitPayload: CreateUnitInput;
+}>;
+
+
+export type CreateUnitMutation = { createUnit: { __typename: 'Unit', id: string, location: string | null, title: string } };
+
+export type UpdateUnitMutationVariables = Exact<{
+  unitPayload: UpdateUnitInput;
+}>;
+
+
+export type UpdateUnitMutation = { updateUnit: { __typename: 'Unit', id: string, title: string, location: string | null } };
+
+export type DeleteUnitMutationVariables = Exact<{
+  deleteUnitId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteUnitMutation = { deleteUnit: { __typename: 'Unit', id: string, title: string, location: string | null } };
+
 export type VpnProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 

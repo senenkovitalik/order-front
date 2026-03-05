@@ -38,16 +38,18 @@ createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <BrowserRouter>
           <Navbar />
-          <Routes>
-            <Route index element={<App />} />
+          <div className="px-4">
+            <Routes>
+              <Route index element={<App />} />
 
-            <Route path="login" element={<Login />} />
+              <Route path="login" element={<Login />} />
 
-            <Route element={<ProtectedRoute />}>
-              <Route path="vpn_profiles" element={<VpnProfiles />} />
-              <Route path="units" element={<Units />} />
-            </Route>
-          </Routes>
+              <Route element={<ProtectedRoute />}>
+                <Route path="vpn_profiles" element={<VpnProfiles />} />
+                <Route path="units" element={<Units />} />
+              </Route>
+            </Routes>
+          </div>
         </BrowserRouter>
       </AuthProvider>
     </ApolloProvider>
