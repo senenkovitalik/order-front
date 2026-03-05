@@ -4,7 +4,7 @@ import type {
   VpnProfilesQuery,
   VpnProfilesQueryVariables,
 } from "../types/__generated__/graphql";
-import "./VpnProfiles.css";
+import { Table, TableRow, TableTd, TableTh } from "../components/components";
 
 const VPN_PROFILES_QUERY = gql`
   query VpnProfiles {
@@ -48,34 +48,34 @@ export default function VpnProfiles() {
   return (
     <div>
       <h1>VPN Profiles</h1>
-      <table className="simple-table">
+      <Table>
         <thead>
-          <tr>
-            <th>Profile Code</th>
-            <th>IP Address</th>
-            <th>Device Manufacturer</th>
-            <th>Device Model</th>
-            <th>Device Serial Number</th>
-            <th>Device OS</th>
-            <th>Employee Name</th>
-            <th>Employee Unit</th>
-          </tr>
+          <TableRow>
+            <TableTh>Profile Code</TableTh>
+            <TableTh>IP Address</TableTh>
+            <TableTh>Device Manufacturer</TableTh>
+            <TableTh>Device Model</TableTh>
+            <TableTh>Device Serial Number</TableTh>
+            <TableTh>Device OS</TableTh>
+            <TableTh>Employee Name</TableTh>
+            <TableTh>Employee Unit</TableTh>
+          </TableRow>
         </thead>
         <tbody>
           {data?.vpnProfiles.map((profile) => (
-            <tr key={profile.id}>
-              <td>{profile.profileCode}</td>
-              <td>{profile.ipAddress}</td>
-              <td>{profile.device?.manufacturer || "-"}</td>
-              <td>{profile.device?.model || "-"}</td>
-              <td>{profile.device?.serialNumber || "-"}</td>
-              <td>{profile.device?.os || "-"}</td>
-              <td>{profile.device?.employee.fullname || "-"}</td>
-              <td>{profile.device?.employee.unit.title || "-"}</td>
-            </tr>
+            <TableRow key={profile.id}>
+              <TableTd>{profile.profileCode}</TableTd>
+              <TableTd>{profile.ipAddress}</TableTd>
+              <TableTd>{profile.device?.manufacturer || "-"}</TableTd>
+              <TableTd>{profile.device?.model || "-"}</TableTd>
+              <TableTd>{profile.device?.serialNumber || "-"}</TableTd>
+              <TableTd>{profile.device?.os || "-"}</TableTd>
+              <TableTd>{profile.device?.employee.fullname || "-"}</TableTd>
+              <TableTd>{profile.device?.employee.unit.title || "-"}</TableTd>
+            </TableRow>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

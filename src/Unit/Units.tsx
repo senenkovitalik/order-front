@@ -4,6 +4,7 @@ import type {
   UnitsQuery,
   UnitsQueryVariables,
 } from "../types/__generated__/graphql";
+import { Table, TableRow, TableTd, TableTh } from "../components/components";
 
 const UNITS_QUERY = gql`
   query Units {
@@ -30,25 +31,24 @@ export default function Units() {
 
   return (
     <div>
-      <h1>Units</h1>
-      <table className="simple-table">
+      <Table>
         <thead>
-          <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Location</th>
-          </tr>
+          <TableRow>
+            <TableTh>#</TableTh>
+            <TableTh>Title</TableTh>
+            <TableTh>Location</TableTh>
+          </TableRow>
         </thead>
         <tbody>
           {data?.units.map((unit, index) => (
-            <tr key={unit.id}>
-              <td>{index + 1}</td>
-              <td>{unit.title}</td>
-              <td>{unit.location}</td>
-            </tr>
+            <TableRow key={unit.id}>
+              <TableTd>{index + 1}</TableTd>
+              <TableTd>{unit.title}</TableTd>
+              <TableTd>{unit.location}</TableTd>
+            </TableRow>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

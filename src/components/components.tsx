@@ -51,3 +51,48 @@ export const StyledLink = (to: string, text: string) => {
     </Link>
   );
 };
+
+// Table components
+export const TableTh = ({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLTableCellElement>) => {
+  return (
+    <th {...props} className="p-3 text-left border-b-[1px_solid_#ddd] bg-[#4CAF50] text-white">
+      {children}
+    </th>
+  );
+};
+
+export const TableTd = ({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLTableCellElement>) => {
+  return (
+    <td {...props} className="p-3 text-left border-b-[1px_solid_#ddd]">
+      {children}
+    </td>
+  );
+};
+
+export const TableRow = ({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLTableRowElement>) => {
+  return (
+    <tr {...props} className="even:bg-[#f2f2f2] hover:bg-[#ddd]">
+      {children}
+    </tr>
+  );
+};
+
+export const Table = ({
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLTableElement>) => {
+  return (
+    <table {...props} className="w-full border-collapse font-[sans-serif]">
+      {children}
+    </table>
+  );
+};
