@@ -288,6 +288,23 @@ export type VpnProfileType = {
   name: Scalars['String']['output'];
 };
 
+export type EmployeesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmployeesQuery = { employees: Array<{ __typename: 'Employee', id: string, fullname: string, contactInfo: string | null, unit: { __typename: 'Unit', id: string, title: string } }> };
+
+export type UnitsForEmployeesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UnitsForEmployeesQuery = { units: Array<{ __typename: 'Unit', id: string, title: string }> };
+
+export type CreateEmployeeMutationVariables = Exact<{
+  employeePayload: CreateEmployeeInput;
+}>;
+
+
+export type CreateEmployeeMutation = { createEmployee: { __typename: 'Employee', contactInfo: string | null, fullname: string, id: string, unit: { __typename: 'Unit', id: string, title: string } } };
+
 export type LoginQueryVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];

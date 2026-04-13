@@ -12,6 +12,7 @@ import VpnProfiles from "./VpnProfiles/VpnProfiles.tsx";
 import Units from "./Unit/Units.tsx";
 import { SetContextLink } from "@apollo/client/link/context";
 import Navbar from "./Navbar/Navbar.tsx";
+import Employees from "./Employee/Employees.tsx";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000/" });
 
@@ -47,6 +48,7 @@ createRoot(document.getElementById("root")!).render(
               <Route element={<ProtectedRoute />}>
                 <Route path="vpn_profiles" element={<VpnProfiles />} />
                 <Route path="units" element={<Units />} />
+                <Route path="employees" element={<Employees />} />
               </Route>
             </Routes>
           </div>
