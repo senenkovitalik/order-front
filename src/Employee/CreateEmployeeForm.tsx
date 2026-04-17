@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Container, Button } from "../components/components";
 import { UNITS_FOR_EMPLOYEES } from "./queries";
 import { useQuery } from "@apollo/client/react";
@@ -6,13 +5,22 @@ import type {
   UnitsForEmployeesQuery,
   UnitsForEmployeesQueryVariables,
 } from "../types/__generated__/graphql";
+import { useForm, type SubmitHandler } from "react-hook-form"
+
+type Inputs = {
+  unitId: string
+  fullname: string
+  contactInfo: string
+}
 
 export default function CreateEmployeeForm({ onCancel, onCreate, error }: any) {
-  const [form, setForm] = useState({
-    unitId: "",
-    fullname: "",
-    contactInfo: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => onCreate(data);
 
   const {
     loading,
@@ -23,40 +31,6 @@ export default function CreateEmployeeForm({ onCancel, onCreate, error }: any) {
   );
 
   const options = data?.units ?? [];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onCreate(form);
-  };
-
-  useEffect(() => {
-    if (!loading && options.length > 0) {
-      const isValid = options.some((opt) => opt.id === form.unitId);
-
-      if (!isValid) {
-        setForm((prevForm) => ({
-          ...prevForm,
-          unitId: options[0].id,
-        }));
-      }
-    }
-  }, [loading, options]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -69,18 +43,16 @@ export default function CreateEmployeeForm({ onCancel, onCreate, error }: any) {
   return (
     <form
       className="border-3 border-solid border-[#f1f1f1]"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Container>
         <label htmlFor="uname">
           <b>Unit</b>
         </label>
         <select
-          name="unitId"
-          required
           className="w-full py-3 px-5 my-2 mx-0 inline-block border border-solid outline-[#ccc] box-border"
-          value={options.length ? form.unitId : ""}
-          onChange={handleSelectChange}
+          defaultValue={options.length > 0 ? options[0].id : ""}
+          {...register("unitId", { required: true })}
           disabled={loading}
         >
           {options.map((unit) => (
@@ -96,11 +68,10 @@ export default function CreateEmployeeForm({ onCancel, onCreate, error }: any) {
         <input
           type="text"
           placeholder="Enter Fullname"
-          name="fullname"
-          required
           className="w-full py-3 px-5 my-2 mx-0 inline-block border border-solid outline-[#ccc] box-border"
-          onChange={handleInputChange}
+          {...register("fullname", { required: true })}
         />
+        {errors.fullname && <span className="block text-red-500 -mt-2.5 mb-0.5">This field is required</span>}
 
         <label htmlFor="contactInfo">
           <b>Contact Info</b>
@@ -108,15 +79,14 @@ export default function CreateEmployeeForm({ onCancel, onCreate, error }: any) {
         <input
           type="text"
           placeholder="Enter Contact Info"
-          name="contactInfo"
-          required
           className="w-full py-3 px-5 my-2 mx-0 inline-block border border-solid outline-[#ccc] box-border"
-          onChange={handleInputChange}
+          {...register("contactInfo", { required: true })}
         />
+        {errors.contactInfo && <span className="block text-red-500 -mt-2.5 mb-0.5">This field is required</span>}
 
         <Button type="submit">Submit</Button>
 
-        {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
+        {error && <p className=" text-red-500 -mt-2.5 mb-0.5">Error: {error.message}</p>}
       </Container>
 
       <Container style={{ backgroundColor: "#f1f1f1" }}>
