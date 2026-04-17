@@ -312,6 +312,13 @@ export type UpdateEmployeeMutationVariables = Exact<{
 
 export type UpdateEmployeeMutation = { updateEmployee: { __typename: 'Employee', id: string, fullname: string, contactInfo: string | null, unit: { __typename: 'Unit', id: string, title: string } } };
 
+export type DeleteEmployeeMutationVariables = Exact<{
+  deleteEmployeeId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteEmployeeMutation = { deleteEmployee: { __typename: 'Employee', id: string } };
+
 export type LoginQueryVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];

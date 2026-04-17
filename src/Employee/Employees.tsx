@@ -2,6 +2,8 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import type {
   CreateEmployeeMutation,
   CreateEmployeeMutationVariables,
+  DeleteEmployeeMutation,
+  DeleteEmployeeMutationVariables,
   Employee,
   EmployeesQuery,
   EmployeesQueryVariables,
@@ -10,6 +12,7 @@ import type {
 } from "../types/__generated__/graphql";
 import {
   CREATE_EMPLOYEE_MUTATION,
+  DELETE_EMPLOYEE_MUTATION,
   EMPLOYEES_QUERY,
   UPDATE_EMPLOYEE_MUTATION,
 } from "./queries";
@@ -23,8 +26,9 @@ import {
 } from "../components/components";
 import { useState } from "react";
 import CreateEmployeeForm from "./CreateEmployeeForm";
-import type { ModalState } from "./types";
+import type { EmployeeT, ModalState } from "./types";
 import UpdateEmployeeForm from "./UpdateEmployeeForm";
+import DeleteEmployeeForm from "./DeleteEmployeeForm";
 
 export default function Employees() {
   const [modal, setModal] = useState<ModalState>(null);
@@ -46,6 +50,13 @@ export default function Employees() {
     { reset: resetUpdateError, error: updateEmployeeError },
   ] = useMutation<UpdateEmployeeMutation, UpdateEmployeeMutationVariables>(
     UPDATE_EMPLOYEE_MUTATION,
+  );
+
+  const [
+    deleteEmployee,
+    { reset: resetDeleteError, error: deleteEmployeeError },
+  ] = useMutation<DeleteEmployeeMutation, DeleteEmployeeMutationVariables>(
+    DELETE_EMPLOYEE_MUTATION,
   );
 
   const handleCreateSubmit = async (form: {
@@ -111,6 +122,21 @@ export default function Employees() {
     }
   };
 
+  const handleDeleteSubmit = async () => {
+    try {
+      await deleteEmployee({
+        variables: {
+          deleteEmployeeId: modal?.type === "delete" ? modal.employeeId : "",
+        },
+        refetchQueries: [{ query: EMPLOYEES_QUERY }],
+      });
+
+      setModal(null);
+    } catch (err) {
+      console.error("Error deleting employee:", err);
+    }
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -148,7 +174,9 @@ export default function Employees() {
                 </Button>
                 <Button
                   variant="danger"
-                  //   onClick={() => setModal({ type: "delete", unitId: unit.id })}
+                  onClick={() =>
+                    setModal({ type: "delete", employeeId: employee.id })
+                  }
                 >
                   Delete
                 </Button>
@@ -192,17 +220,21 @@ export default function Employees() {
             />
           )}
 
-          {/* {modal?.type === "delete" && (
-            <DeleteUnitForm
-              data={data?.units.find((u) => u.id === modal.unitId) as UnitT}
+          {modal?.type === "delete" && (
+            <DeleteEmployeeForm
+              data={
+                data?.employees.find(
+                  (e) => e.id === modal.employeeId,
+                ) as Employee
+              }
               onCancel={() => {
                 setModal(null);
                 resetDeleteError();
               }}
               onDelete={handleDeleteSubmit}
-              error={deleteUnitError}
+              error={deleteEmployeeError}
             />
-          )}  */}
+          )}
         </Modal>
       )}
     </div>

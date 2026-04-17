@@ -50,3 +50,11 @@ export const UPDATE_EMPLOYEE_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_EMPLOYEE_MUTATION = gql`
+  mutation DeleteEmployee($deleteEmployeeId: ID!) {
+    deleteEmployee(id: $deleteEmployeeId) {
+      id
+    }
+  }
+`;
