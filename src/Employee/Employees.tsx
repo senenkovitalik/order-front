@@ -2,10 +2,17 @@ import { useMutation, useQuery } from "@apollo/client/react";
 import type {
   CreateEmployeeMutation,
   CreateEmployeeMutationVariables,
+  Employee,
   EmployeesQuery,
   EmployeesQueryVariables,
+  UpdateEmployeeMutation,
+  UpdateEmployeeMutationVariables,
 } from "../types/__generated__/graphql";
-import { CREATE_EMPLOYEE_MUTATION, EMPLOYEES_QUERY } from "./queries";
+import {
+  CREATE_EMPLOYEE_MUTATION,
+  EMPLOYEES_QUERY,
+  UPDATE_EMPLOYEE_MUTATION,
+} from "./queries";
 import {
   Button,
   Modal,
@@ -15,8 +22,9 @@ import {
   TableTh,
 } from "../components/components";
 import { useState } from "react";
-import type { ModalState } from "../Unit/types";
 import CreateEmployeeForm from "./CreateEmployeeForm";
+import type { ModalState } from "./types";
+import UpdateEmployeeForm from "./UpdateEmployeeForm";
 
 export default function Employees() {
   const [modal, setModal] = useState<ModalState>(null);
@@ -31,6 +39,13 @@ export default function Employees() {
     { reset: resetCreateError, error: createEmployeeError },
   ] = useMutation<CreateEmployeeMutation, CreateEmployeeMutationVariables>(
     CREATE_EMPLOYEE_MUTATION,
+  );
+
+  const [
+    updateEmployee,
+    { reset: resetUpdateError, error: updateEmployeeError },
+  ] = useMutation<UpdateEmployeeMutation, UpdateEmployeeMutationVariables>(
+    UPDATE_EMPLOYEE_MUTATION,
   );
 
   const handleCreateSubmit = async (form: {
@@ -53,7 +68,7 @@ export default function Employees() {
             // userId,
             unitId,
             fullname,
-            contactInfo
+            contactInfo,
           },
         },
         refetchQueries: [{ query: EMPLOYEES_QUERY }],
@@ -62,6 +77,37 @@ export default function Employees() {
       setModal(null);
     } catch (err) {
       console.error("Error creating employee:", err);
+    }
+  };
+
+  const handleUpdateSubmit = async (form: {
+    unitId: string;
+    fullname: string;
+    contactInfo: string;
+  }) => {
+    const { unitId, fullname, contactInfo } = form;
+    // check input values
+    if (!fullname.trim() || !contactInfo.trim()) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      await updateEmployee({
+        variables: {
+          employeePayload: {
+            id: modal?.type === "update" ? modal.employeeId : "",
+            unitId,
+            fullname,
+            contactInfo,
+          },
+        },
+        refetchQueries: [{ query: EMPLOYEES_QUERY }],
+      });
+
+      setModal(null);
+    } catch (err) {
+      console.error("Error updating employee:", err);
     }
   };
 
@@ -94,7 +140,9 @@ export default function Employees() {
               <TableTd>{employee.unit?.title}</TableTd>
               <td className="flex gap-2">
                 <Button
-                //   onClick={() => setModal({ type: "update", unitId: unit.id })}
+                  onClick={() =>
+                    setModal({ type: "update", employeeId: employee.id })
+                  }
                 >
                   Edit
                 </Button>
@@ -128,19 +176,23 @@ export default function Employees() {
             />
           )}
 
-          {/* {modal?.type === "update" && (
-            <UpdateUnitForm
-              data={data?.units.find((u) => u.id === modal.unitId) as Unit}
+          {modal?.type === "update" && (
+            <UpdateEmployeeForm
+              data={
+                data?.employees.find(
+                  (e) => e.id === modal.employeeId,
+                ) as Employee
+              }
               onCancel={() => {
                 setModal(null);
                 resetUpdateError();
               }}
               onUpdate={handleUpdateSubmit}
-              error={updateUnitError}
+              error={updateEmployeeError}
             />
           )}
 
-          {modal?.type === "delete" && (
+          {/* {modal?.type === "delete" && (
             <DeleteUnitForm
               data={data?.units.find((u) => u.id === modal.unitId) as UnitT}
               onCancel={() => {
@@ -150,7 +202,7 @@ export default function Employees() {
               onDelete={handleDeleteSubmit}
               error={deleteUnitError}
             />
-          )} */}
+          )}  */}
         </Modal>
       )}
     </div>

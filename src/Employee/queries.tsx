@@ -36,3 +36,17 @@ export const CREATE_EMPLOYEE_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_EMPLOYEE_MUTATION = gql`
+  mutation UpdateEmployee($employeePayload: UpdateEmployeeInput!) {
+    updateEmployee(employeePayload: $employeePayload) {
+      id
+      unit {
+        id
+        title
+      }
+      fullname
+      contactInfo
+    }
+  }
+`;
