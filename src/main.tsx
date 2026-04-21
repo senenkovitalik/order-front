@@ -13,6 +13,7 @@ import Units from "./Unit/Units.tsx";
 import { SetContextLink } from "@apollo/client/link/context";
 import Navbar from "./Navbar/Navbar.tsx";
 import Employees from "./Employee/Employees.tsx";
+import Devices from "./Devices/Devices.tsx";
 
 const httpLink = new HttpLink({ uri: "http://localhost:4000/" });
 
@@ -49,6 +50,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="vpn_profiles" element={<VpnProfiles />} />
                 <Route path="units" element={<Units />} />
                 <Route path="employees" element={<Employees />} />
+                <Route path="devices" element={<Devices />} />
               </Route>
             </Routes>
           </div>

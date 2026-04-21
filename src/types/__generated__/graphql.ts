@@ -25,6 +25,7 @@ export type CreateDeviceInput = {
   model: Scalars['String']['input'];
   os: Scalars['String']['input'];
   serialNumber: Scalars['String']['input'];
+  vpnProfileId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CreateEmployeeInput = {
@@ -229,6 +230,11 @@ export type QueryVpnProfileTypeArgs = {
   id: Scalars['ID']['input'];
 };
 
+
+export type QueryVpnProfilesArgs = {
+  filter?: InputMaybe<VpnProfileFilter>;
+};
+
 export type Unit = {
   __typename: 'Unit';
   id: Scalars['ID']['output'];
@@ -243,6 +249,7 @@ export type UpdateDeviceInput = {
   model?: InputMaybe<Scalars['String']['input']>;
   os?: InputMaybe<Scalars['String']['input']>;
   serialNumber?: InputMaybe<Scalars['String']['input']>;
+  vpnProfileId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type UpdateEmployeeInput = {
@@ -281,12 +288,54 @@ export type VpnProfile = {
   profileType: VpnProfileType;
 };
 
+export type VpnProfileFilter = {
+  hasDevice?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type VpnProfileType = {
   __typename: 'VpnProfileType';
   description: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
+
+export type DevicesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DevicesQuery = { devices: Array<{ __typename: 'Device', id: string, manufacturer: string, model: string, os: string, serialNumber: string, employee: { __typename: 'Employee', id: string, fullname: string, contactInfo: string | null, unit: { __typename: 'Unit', id: string, title: string } }, vpnProfile: { __typename: 'VpnProfile', id: string, profileCode: string } | null }> };
+
+export type EmployeesForDeviceQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmployeesForDeviceQuery = { employees: Array<{ __typename: 'Employee', id: string, fullname: string, unit: { __typename: 'Unit', id: string, title: string } }> };
+
+export type VpnProfilesWithoutDevicesQueryVariables = Exact<{
+  filter?: InputMaybe<VpnProfileFilter>;
+}>;
+
+
+export type VpnProfilesWithoutDevicesQuery = { vpnProfiles: Array<{ __typename: 'VpnProfile', id: string, profileCode: string, device: { __typename: 'Device', id: string } | null }> };
+
+export type CreateDeviceMutationVariables = Exact<{
+  devicePayload: CreateDeviceInput;
+}>;
+
+
+export type CreateDeviceMutation = { createDevice: { __typename: 'Device', id: string, manufacturer: string, model: string, os: string, serialNumber: string, employee: { __typename: 'Employee', id: string, fullname: string, contactInfo: string | null, unit: { __typename: 'Unit', id: string, title: string } }, vpnProfile: { __typename: 'VpnProfile', id: string, profileCode: string } | null } };
+
+export type UpdateDeviceMutationVariables = Exact<{
+  devicePayload: UpdateDeviceInput;
+}>;
+
+
+export type UpdateDeviceMutation = { updateDevice: { __typename: 'Device', id: string, manufacturer: string, model: string, os: string, serialNumber: string, employee: { __typename: 'Employee', id: string, fullname: string, contactInfo: string | null, unit: { __typename: 'Unit', id: string, title: string } }, vpnProfile: { __typename: 'VpnProfile', id: string, profileCode: string } | null } };
+
+export type DeleteDeviceMutationVariables = Exact<{
+  deleteDeviceId: Scalars['ID']['input'];
+}>;
+
+
+export type DeleteDeviceMutation = { deleteDevice: { __typename: 'Device', id: string } };
 
 export type EmployeesQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -8,6 +8,7 @@ export default function Navbar() {
         <li>{StyledLink("/vpn_profiles", "VPN Profiles")}</li>
         <li>{StyledLink("/units", "Units")}</li>
         <li>{StyledLink("/employees", "Employees")}</li>
+        <li>{StyledLink("/devices", "Devices")}</li>
       </ul>
     </nav>
   );
